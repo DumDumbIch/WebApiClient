@@ -2,10 +2,18 @@ package com.dumdumbich.interview.webapiclient
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.dumdumbich.interview.webapiclient.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var ui: ActivityMainBinding
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        ui = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(ui.root)
     }
+
 }
