@@ -1,4 +1,4 @@
-package com.dumdumbich.interview.webapiclient
+package com.dumdumbich.interview.webapiclient.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
