@@ -3,13 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:layout_margin="4dp"
+    android:layout_height="wrap_content"
     android:backgroundTint="@android:color/darker_gray"
     android:clickable="true"
-    android:elevation="8dp"
+    android:elevation="4dp"
     android:focusable="true"
-    android:padding="8dp"
+    android:padding="4dp"
     app:cardCornerRadius="8dp"
     app:cardUseCompatPadding="true">
 
@@ -18,10 +17,10 @@
         android:layout_height="wrap_content"
         android:background="?selectableItemBackground"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="4dp">
 
         <TextView
-            android:id="@+id/title_text_view"
+            android:id="@+id/user_login_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
@@ -29,10 +28,10 @@
             android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold"
-            tools:text="Заголовок элемента списка" />
+            tools:text="DumDumbIch" />
 
         <TextView
-            android:id="@+id/detail_text_view"
+            android:id="@+id/user_repository_url_text_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:ellipsize="end"
@@ -40,7 +39,7 @@
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="italic"
-            tools:text="Краткое описание содержимого элемента списка" />
+            tools:text="https//github/DumDumbIch/" />
 
     </LinearLayout>
 
