@@ -20,26 +20,26 @@
         android:padding="4dp">
 
         <TextView
-            android:id="@+id/item_user_login_text_view"
+            android:id="@+id/item_repository_name_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="24sp"
+            android:textSize="16sp"
             android:textStyle="bold"
-            tools:text="DumDumbIch" />
+            tools:text="DumDumbIch/WebApiClient" />
 
         <TextView
-            android:id="@+id/item_user_repository_url_text_view"
+            android:id="@+id/item_repository_forks_text_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:ellipsize="end"
             android:maxLines="2"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="italic"
-            tools:text="https//github/DumDumbIch/" />
+            tools:text="Forks 3" />
 
     </LinearLayout>
 

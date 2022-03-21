@@ -3,7 +3,7 @@ package com.dumdumbich.interview.webapiclient.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.dumdumbich.interview.webapiclient.databinding.ActivityMainBinding
-import com.dumdumbich.interview.webapiclient.ui.screen.list.ListFragment
+import com.dumdumbich.interview.webapiclient.ui.screen.users.UsersListFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
         ui.mainFragmentContainer.let { container ->
             supportFragmentManager.beginTransaction()
-                .replace(container.id, ListFragment())
+                .replace(container.id, UsersListFragment())
                 .commit()
         }
 

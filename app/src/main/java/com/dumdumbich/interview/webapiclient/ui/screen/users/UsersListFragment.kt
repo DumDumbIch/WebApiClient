@@ -1,4 +1,4 @@
-package com.dumdumbich.interview.webapiclient.ui.screen.list
+package com.dumdumbich.interview.webapiclient.ui.screen.users
 
 import android.os.Bundle
 import android.os.Handler
@@ -9,15 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.dumdumbich.interview.webapiclient.app
-import com.dumdumbich.interview.webapiclient.databinding.FragmentListBinding
+import com.dumdumbich.interview.webapiclient.databinding.FragmentUsersListBinding
 import com.dumdumbich.interview.webapiclient.domain.entity.User
 import com.dumdumbich.interview.webapiclient.ui.base.BaseFragment
-import java.lang.IllegalStateException
 
 
-class ListFragment : BaseFragment() {
+class UsersListFragment : BaseFragment() {
 
-    private var _ui: FragmentListBinding? = null
+    private var _ui: FragmentUsersListBinding? = null
     private val ui get() = _ui!!
 
     private val handlerThread: HandlerThread = HandlerThread("thread_pool")
@@ -32,11 +31,11 @@ class ListFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = FragmentListBinding.inflate(inflater, container, false).root
+    ): View = FragmentUsersListBinding.inflate(inflater, container, false).root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _ui = FragmentListBinding.bind(view)
+        _ui = FragmentUsersListBinding.bind(view)
         handlerThread.start()
 
         itemsListAdapter = ItemsListAdapter(users)
@@ -49,7 +48,7 @@ class ListFragment : BaseFragment() {
                 this.users.clear()
                 this.users.addAll(users)
                 uiHandler.post {
-                    itemsListAdapter.notifyDataSetChanged()
+                    itemsListAdapter.setData(users)
                     hideProgressBar()
                 }
             },

@@ -1,16 +1,16 @@
-package com.dumdumbich.interview.webapiclient.ui.screen.detail
+package com.dumdumbich.interview.webapiclient.ui.screen.user
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.dumdumbich.interview.webapiclient.databinding.FragmentDetailBinding
+import com.dumdumbich.interview.webapiclient.databinding.FragmentUserBinding
 import com.dumdumbich.interview.webapiclient.ui.base.BaseFragment
 
 
-class DetailFragment : BaseFragment() {
+class UserFragment : BaseFragment() {
 
-    private var _ui: FragmentDetailBinding? = null
+    private var _ui: FragmentUserBinding? = null
     private val ui get() = _ui!!
 
 
@@ -18,11 +18,11 @@ class DetailFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = FragmentDetailBinding.inflate(inflater, container, false).root
+    ): View = FragmentUserBinding.inflate(inflater, container, false).root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _ui = FragmentDetailBinding.bind(view)
+        _ui = FragmentUserBinding.bind(view)
     }
 
     override fun onDestroyView() {

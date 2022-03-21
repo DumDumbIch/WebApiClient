@@ -1,4 +1,4 @@
-package com.dumdumbich.interview.webapiclient.ui.screen.list
+package com.dumdumbich.interview.webapiclient.ui.screen.users
 
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
@@ -17,8 +17,8 @@ class ItemViewHolder(
 
     fun bind(item: User) {
         this.item = item
-        ui.userLoginTextView.text = item.login
-        ui.userRepositoryUrlTextView.text = item.reposUrl
+        ui.itemUserLoginTextView.text = item.login
+        ui.itemUserRepositoryUrlTextView.text = item.reposUrl
         Log.d(TAG, "bind() called with: item = { ${item.login} : ${item.reposUrl}}")
     }
 

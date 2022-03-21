@@ -1,4 +1,4 @@
-package com.dumdumbich.interview.webapiclient.ui.screen.list
+package com.dumdumbich.interview.webapiclient.ui.screen.users
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
