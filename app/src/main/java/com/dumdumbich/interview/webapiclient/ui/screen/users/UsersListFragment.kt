@@ -7,6 +7,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import com.dumdumbich.interview.webapiclient.app
 import com.dumdumbich.interview.webapiclient.databinding.FragmentUsersListBinding
@@ -24,7 +25,29 @@ class UsersListFragment : BaseFragment() {
     private val jobHandler by lazy { Handler(handlerThread.looper) }
 
     private lateinit var itemsListAdapter: ItemsListAdapter
-    private val users = ArrayList<User>()
+    private val users: MutableList<User> = emptyList<User>().toMutableList()
+
+    private val listener = object : ItemActionListener {
+
+        override fun onItemShortClickListener(user: User) {
+            Toast.makeText(
+                requireContext(),
+                "Short click on item: ${user.login}",
+                Toast.LENGTH_SHORT
+            ).show()
+            app.router.showUserScreen(user.login)
+        }
+
+        override fun onItemLongClickListener(user: User, anchor: View): Boolean {
+            Toast.makeText(
+                requireContext(),
+                "Long click on item: ${user.login}",
+                Toast.LENGTH_SHORT
+            ).show()
+            return true
+        }
+
+    }
 
 
     override fun onCreateView(
@@ -38,11 +61,10 @@ class UsersListFragment : BaseFragment() {
         _ui = FragmentUsersListBinding.bind(view)
         handlerThread.start()
 
-        itemsListAdapter = ItemsListAdapter(users)
+        itemsListAdapter = ItemsListAdapter(users, listener)
         ui.briefInfoItemRecyclerView.adapter = itemsListAdapter
 
         showProgressBar()
-
         app.githubDataSource.getUsers(
             onSuccess = { users ->
                 this.users.clear()
@@ -53,7 +75,7 @@ class UsersListFragment : BaseFragment() {
                 }
             },
             onError = {
-                throw IllegalStateException("GitHub: data receive error")
+                throw IllegalStateException("GitHub: users data receive error")
             }
         )
 

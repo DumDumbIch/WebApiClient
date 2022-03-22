@@ -9,7 +9,8 @@ import com.dumdumbich.interview.webapiclient.domain.entity.User
 
 
 class ItemsListAdapter(
-    private var data: List<User>
+    private var data: List<User>,
+    private val listener: ItemActionListener
 ) : RecyclerView.Adapter<ItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder =
@@ -18,7 +19,8 @@ class ItemsListAdapter(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            )
+            ),
+            listener
         )
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {

@@ -7,7 +7,8 @@ import com.dumdumbich.interview.webapiclient.domain.entity.User
 
 
 class ItemViewHolder(
-    private val ui: ItemUserBriefInfoBinding
+    private val ui: ItemUserBriefInfoBinding,
+    private val listener: ItemActionListener
 ) : RecyclerView.ViewHolder(ui.root) {
 
     private val TAG = "@@@  ${this::class.java.simpleName} : ${this.hashCode()}"
@@ -19,6 +20,8 @@ class ItemViewHolder(
         this.item = item
         ui.itemUserLoginTextView.text = item.login
         ui.itemUserRepositoryUrlTextView.text = item.reposUrl
+        itemView.setOnClickListener { listener.onItemShortClickListener(item) }
+        itemView.setOnLongClickListener { listener.onItemLongClickListener(item, ui.root) }
         Log.d(TAG, "bind() called with: item = { ${item.login} : ${item.reposUrl}}")
     }
 
