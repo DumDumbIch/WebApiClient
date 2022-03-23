@@ -8,6 +8,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import com.dumdumbich.interview.webapiclient.app
 import com.dumdumbich.interview.webapiclient.databinding.FragmentRepositoryBinding
@@ -39,17 +40,26 @@ class RepositoryFragment : BaseFragment() {
     private val uiHandler by lazy { Handler(Looper.getMainLooper()) }
     private val jobHandler by lazy { Handler(handlerThread.looper) }
 
-    private var userLogin: String? = null
-    private var repositoryName: String? = null
+    private var _userLogin: String? = null
+    private val userLogin get() = _userLogin ?: "JakeWharton"
+
+    private var _repositoryName: String? = null
+    private val repositoryName get() = _repositoryName ?: "Retrofit"
+
     private var repository: Repository? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let { bundle ->
-            userLogin = bundle.getString(ARG_USER_LOGIN)
-            repositoryName = bundle.getString(ARG_REPOSITORY_NAME)
+            _userLogin = bundle.getString(ARG_USER_LOGIN)
+            _repositoryName = bundle.getString(ARG_REPOSITORY_NAME)
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            app.router.showUserScreen(userLogin)
+        }
+
     }
 
     override fun onCreateView(
@@ -62,30 +72,36 @@ class RepositoryFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _ui = FragmentRepositoryBinding.bind(view)
+        handlerThread.start()
 
         showProgressBar()
-        app.githubDataSource.getUserRepository(
-            userLogin ?: "JakeWharton",
-            repositoryName ?: "Retrofit",
-            onSuccess = { repository ->
-                this.repository = repository
-                uiHandler.post {
-                    ui.repositoryNameTextView.text = repository.name
-                    ui.repositoryForksTextView.text = "Forks : ${repository.forks}"
-                    ui.repositoryPushedAtTextView.text = "Pushed at : ${repository.pushedAt}"
-                    hideProgressBar()
+        jobHandler.post {
+            app.githubDataSource.getUserRepository(userLogin, repositoryName,
+                onSuccess = { repository ->
+                    this.repository = repository
+                    uiHandler.post {
+                        ui.repositoryNameTextView.text = repository.name
+                        ui.repositoryForksTextView.text = "Forks : ${repository.forks}"
+                        ui.repositoryPushedAtTextView.text = "Pushed at : ${repository.pushedAt}"
+                        hideProgressBar()
+                    }
+                },
+                onError = {
+                    throw IllegalStateException("GitHub: user repository data receive error")
                 }
-            },
-            onError = {
-                throw IllegalStateException("GitHub: user repository data receive error")
-            }
-        )
+            )
+        }
 
     }
 
     override fun onDestroyView() {
         _ui = null
         super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        handlerThread.quit()
+        super.onDestroy()
     }
 
     private fun showProgressBar() {

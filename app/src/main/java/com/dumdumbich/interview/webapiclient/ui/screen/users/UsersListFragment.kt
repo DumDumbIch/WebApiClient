@@ -65,25 +65,32 @@ class UsersListFragment : BaseFragment() {
         ui.briefInfoItemRecyclerView.adapter = itemsListAdapter
 
         showProgressBar()
-        app.githubDataSource.getUsers(
-            onSuccess = { users ->
-                this.users.clear()
-                this.users.addAll(users)
-                uiHandler.post {
-                    itemsListAdapter.setData(users)
-                    hideProgressBar()
+        jobHandler.post {
+            app.githubDataSource.getUsers(
+                onSuccess = { users ->
+                    this.users.clear()
+                    this.users.addAll(users)
+                    uiHandler.post {
+                        itemsListAdapter.setData(users)
+                        hideProgressBar()
+                    }
+                },
+                onError = {
+                    throw IllegalStateException("GitHub: users data receive error")
                 }
-            },
-            onError = {
-                throw IllegalStateException("GitHub: users data receive error")
-            }
-        )
+            )
+        }
 
     }
 
     override fun onDestroyView() {
         _ui = null
         super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        handlerThread.quit()
+        super.onDestroy()
     }
 
     private fun showProgressBar() {

@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import com.dumdumbich.interview.webapiclient.app
 import com.dumdumbich.interview.webapiclient.databinding.FragmentUserBinding
@@ -40,7 +41,9 @@ class UserFragment : BaseFragment() {
     private val uiHandler by lazy { Handler(Looper.getMainLooper()) }
     private val jobHandler by lazy { Handler(handlerThread.looper) }
 
-    private var userLogin: String? = null
+    private var _userLogin: String? = null
+    private val userLogin get() = _userLogin ?: "JakeWharton"
+
     private var user: User? = null
 
     private lateinit var itemsListAdapter: ItemsListAdapter
@@ -54,7 +57,7 @@ class UserFragment : BaseFragment() {
                 "Short click on item: ${repository.name}",
                 Toast.LENGTH_SHORT
             ).show()
-            userLogin?.let { app.router.showRepositoryScreen(it, repository.name) }
+            app.router.showRepositoryScreen(userLogin, repository.name)
         }
 
         override fun onItemLongClickListener(repository: Repository, anchor: View): Boolean {
@@ -72,8 +75,13 @@ class UserFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let { bundle ->
-            userLogin = bundle.getString(ARG_USER_LOGIN)
+            _userLogin = bundle.getString(ARG_USER_LOGIN)
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            app.router.showUsersListScreen()
+        }
+
     }
 
     override fun onCreateView(
@@ -91,42 +99,49 @@ class UserFragment : BaseFragment() {
         ui.briefInfoRepositoryItemRecyclerView.adapter = itemsListAdapter
 
         showUserProgressBar()
-        app.githubDataSource.getUser(
-            userLogin ?: "JakeWharton",
-            onSuccess = { user ->
-                this.user = user
-                uiHandler.post {
-                    ui.userLoginTextView.text = user.login
-                    ui.userRepositoryUrlTextView.text = user.reposUrl
-                    hideUserProgressBar()
+        jobHandler.post {
+            app.githubDataSource.getUser(userLogin,
+                onSuccess = { user ->
+                    this.user = user
+                    uiHandler.post {
+                        ui.userLoginTextView.text = user.login
+                        ui.userRepositoryUrlTextView.text = user.reposUrl
+                        hideUserProgressBar()
+                    }
+                },
+                onError = {
+                    throw IllegalStateException("GitHub: user data receive error")
                 }
-            },
-            onError = {
-                throw IllegalStateException("GitHub: user data receive error")
-            }
-        )
+            )
+        }
 
         showRepositoriesProgressBar()
-        app.githubDataSource.getUserRepositories(
-            userLogin ?: "JakeWharton",
-            onSuccess = { repositories ->
-                this.repositories.clear()
-                this.repositories.addAll(repositories)
-                uiHandler.post {
-                    itemsListAdapter.setData(repositories)
-                    hideRepositoriesProgressBar()
+        jobHandler.post {
+            app.githubDataSource.getUserRepositories(userLogin,
+                onSuccess = { repositories ->
+                    this.repositories.clear()
+                    this.repositories.addAll(repositories)
+                    uiHandler.post {
+                        itemsListAdapter.setData(repositories)
+                        hideRepositoriesProgressBar()
+                    }
+                },
+                onError = {
+                    throw IllegalStateException("GitHub: user repositories data receive error")
                 }
-            },
-            onError = {
-                throw IllegalStateException("GitHub: user repositories data receive error")
-            }
-        )
+            )
+        }
 
     }
 
     override fun onDestroyView() {
         _ui = null
         super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        handlerThread.quit()
+        super.onDestroy()
     }
 
     private fun showUserProgressBar() {
