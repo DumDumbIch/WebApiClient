@@ -1,6 +1,5 @@
 package com.dumdumbich.interview.webapiclient.data.source
 
-
 import android.annotation.SuppressLint
 import com.dumdumbich.interview.webapiclient.domain.entity.Repository
 import com.dumdumbich.interview.webapiclient.domain.entity.User
@@ -64,6 +63,7 @@ class GithubMockDataSource : GithubUsecase {
         )
 
     private fun createUsers(items: Int): List<User> {
+        users.clear()
         for (item in 1..items) users.add(createUser(item))
         return users
     }
@@ -76,6 +76,7 @@ class GithubMockDataSource : GithubUsecase {
         )
 
     private fun createRepositories(items: Int): List<Repository> {
+        repositories.clear()
         for (item in 1..items) repositories.add(createRepository())
         return repositories
     }
