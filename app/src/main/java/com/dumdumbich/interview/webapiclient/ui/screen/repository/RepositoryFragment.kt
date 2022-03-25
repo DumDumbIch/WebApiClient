@@ -76,7 +76,9 @@ class RepositoryFragment : BaseFragment() {
 
         showProgressBar()
         jobHandler.post {
-            app.githubDataSource.getUserRepository(userLogin, repositoryName,
+            app.dataCenter.getUserRepository(
+                userLogin,
+                repositoryName,
                 onSuccess = { repository ->
                     this.repository = repository
                     uiHandler.post {

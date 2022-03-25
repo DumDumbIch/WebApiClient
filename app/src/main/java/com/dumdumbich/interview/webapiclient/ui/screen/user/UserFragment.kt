@@ -100,7 +100,8 @@ class UserFragment : BaseFragment() {
 
         showUserProgressBar()
         jobHandler.post {
-            app.githubDataSource.getUser(userLogin,
+            app.dataCenter.getUser(
+                userLogin,
                 onSuccess = { user ->
                     this.user = user
                     uiHandler.post {
@@ -117,7 +118,8 @@ class UserFragment : BaseFragment() {
 
         showRepositoriesProgressBar()
         jobHandler.post {
-            app.githubDataSource.getUserRepositories(userLogin,
+            app.dataCenter.getUserRepositories(
+                userLogin,
                 onSuccess = { repositories ->
                     this.repositories.clear()
                     this.repositories.addAll(repositories)

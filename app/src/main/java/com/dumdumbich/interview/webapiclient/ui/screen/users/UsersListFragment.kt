@@ -25,7 +25,6 @@ class UsersListFragment : BaseFragment() {
     private val jobHandler by lazy { Handler(handlerThread.looper) }
 
     private lateinit var itemsListAdapter: ItemsListAdapter
-    private val users: MutableList<User> = emptyList<User>().toMutableList()
 
     private val listener = object : ItemActionListener {
 
@@ -61,15 +60,17 @@ class UsersListFragment : BaseFragment() {
         _ui = FragmentUsersListBinding.bind(view)
         handlerThread.start()
 
-        itemsListAdapter = ItemsListAdapter(users, listener)
+        itemsListAdapter = ItemsListAdapter(
+            emptyList<User>().toMutableList(),
+            listener
+        )
+
         ui.briefInfoItemRecyclerView.adapter = itemsListAdapter
 
         showProgressBar()
         jobHandler.post {
-            app.githubDataSource.getUsers(
+            app.dataCenter.getUsers(
                 onSuccess = { users ->
-                    this.users.clear()
-                    this.users.addAll(users)
                     uiHandler.post {
                         itemsListAdapter.setData(users)
                         hideProgressBar()
