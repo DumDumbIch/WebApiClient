@@ -7,7 +7,8 @@ import com.dumdumbich.interview.webapiclient.domain.entity.User
 interface GithubUsecase {
 
     fun getUser(
-        login: String, onSuccess: (User) -> Unit,
+        login: String,
+        onSuccess: (User) -> Unit,
         onError: (Throwable) -> Unit
     )
 
