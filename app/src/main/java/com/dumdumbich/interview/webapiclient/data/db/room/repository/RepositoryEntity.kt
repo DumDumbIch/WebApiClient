@@ -11,14 +11,20 @@ data class RepositoryEntity(
     @ColumnInfo(name = "repository_name")
     val name: String,
 
+    @ColumnInfo(name = "repository_owner_login")
+    val ownerLogin: String,
+
     @ColumnInfo(name = "repository_pushed_at")
     val pushedAt: String,
 
     @ColumnInfo(name = "repository_forks")
     val forks: Int,
 
+    @ColumnInfo(name = "id")
+    val id: Int,
+
     @PrimaryKey
     @ColumnInfo
-    val id: String
+    val table_id: String
 
 )

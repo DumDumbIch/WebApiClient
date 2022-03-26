@@ -59,7 +59,8 @@ class GithubMockDataSource : GithubUsecase {
         User(
             "",
             "Login $item",
-            "https//github/login$item"
+            "https//github/login$item",
+            Random().nextInt()
         )
 
     private fun createUsers(items: Int): List<User> {
@@ -71,8 +72,10 @@ class GithubMockDataSource : GithubUsecase {
     private fun createRepository(): Repository =
         Repository(
             "Name ${UUID.randomUUID().toString()}",
+            "DumDumbIch",
             getFictionDateTime(),
-            Random().nextInt(10)
+            Random().nextInt(10),
+            Random().nextInt()
         )
 
     private fun createRepositories(items: Int): List<Repository> {

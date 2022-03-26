@@ -153,23 +153,21 @@ class GithubWebDataSource : GithubUsecase {
     }
 
     private fun getUserFromDto(dto: OwnerDto): User {
-        return dto.let { owner ->
-            User(
-                owner.avatarUrl,
-                owner.login,
-                owner.reposUrl
-            )
-        }
+        return User(
+            dto.avatarUrl,
+            dto.login,
+            dto.reposUrl,
+            dto.id
+        )
     }
 
     private fun getUserFromDto(dto: UserDto): User {
-        return dto.let { user ->
-            User(
-                user.avatarUrl,
-                user.login,
-                user.reposUrl
-            )
-        }
+        return User(
+            dto.avatarUrl,
+            dto.login,
+            dto.reposUrl,
+            dto.id
+        )
     }
 
     private fun getUsersListFromDto(dtoList: List<OwnerDto>): List<User> {
@@ -181,13 +179,13 @@ class GithubWebDataSource : GithubUsecase {
     }
 
     private fun getRepositoryFromDto(dto: RepositoryDto): Repository {
-        return dto.let { repository ->
-            Repository(
-                repository.name,
-                repository.pushedAt,
-                repository.forks
-            )
-        }
+        return Repository(
+            dto.name,
+            dto.owner.login,
+            dto.pushedAt,
+            dto.forks,
+            dto.id
+        )
     }
 
     private fun getRepositoriesListFromDto(dtoList: List<RepositoryDto>): List<Repository> {

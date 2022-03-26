@@ -17,8 +17,11 @@ data class UserEntity(
     @ColumnInfo(name = "user_repository_url")
     val reposUrl: String,
 
+    @ColumnInfo(name = "id")
+    val id: Int,
+
     @PrimaryKey
     @ColumnInfo
-    val id: String
+    val table_id: String
 
 )

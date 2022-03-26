@@ -1,22 +1,22 @@
 package com.dumdumbich.interview.webapiclient.data.db.room.repository
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 
 
 @Dao
 interface RepositoryDao {
 
-    @Insert
-    fun create(repository: RepositoryEntity)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(repository: RepositoryEntity)
+
+    @Query("SELECT * FROM table_repository WHERE repository_name == :repositoryName AND repository_owner_login == :ownerLogin")
+    fun get(repositoryName: String, ownerLogin: String): RepositoryEntity
 
     @Delete
     fun delete(repository: RepositoryEntity)
 
     @Query("SELECT * FROM table_repository")
-    fun readAll(): List<RepositoryEntity>
+    fun getAll(): List<RepositoryEntity>
 
     @Query("DELETE FROM table_repository")
     fun deleteAll()
