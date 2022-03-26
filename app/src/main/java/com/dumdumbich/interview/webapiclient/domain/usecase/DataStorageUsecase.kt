@@ -9,13 +9,17 @@ interface DataStorageUsecase {
 
     //    User
     fun saveUser(user: User)
+    fun isUserInStorage(login: String): Boolean
+    fun loadUser(login: String): User
     fun saveAllUsers(users: List<User>)
     fun readAllUsers(): List<User>
     fun deleteAllUsers()
 
     //    Repository
     fun saveRepository(repository: Repository)
-    fun saveAllRepositories(repository: List<Repository>)
+    fun isRepositoryInStorage(repositoryName: String, ownerLogin: String): Boolean
+    fun loadRepository(repositoryName: String, ownerLogin: String): Repository
+    fun saveAllRepositories(repositories: List<Repository>)
     fun readAllRepositories(): List<Repository>
     fun deleteAllRepositories()
 
