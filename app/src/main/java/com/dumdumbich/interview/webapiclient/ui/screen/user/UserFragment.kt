@@ -118,7 +118,7 @@ class UserFragment : BaseFragment() {
 
         showRepositoriesProgressBar()
         jobHandler.post {
-            app.dataCenter.getUserRepositories(
+            app.dataCenter.getRepositories(
                 userLogin,
                 onSuccess = { repositories ->
                     this.repositories.clear()

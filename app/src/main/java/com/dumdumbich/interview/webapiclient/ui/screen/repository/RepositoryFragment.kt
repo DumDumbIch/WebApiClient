@@ -76,14 +76,14 @@ class RepositoryFragment : BaseFragment() {
 
         showProgressBar()
         jobHandler.post {
-            app.dataCenter.getUserRepository(
-                userLogin,
+            app.dataCenter.getRepository(
                 repositoryName,
+                userLogin,
                 onSuccess = { repository ->
                     this.repository = repository
                     uiHandler.post {
                         ui.repositoryNameTextView.text = repository.name
-                        ui.repositoryForksTextView.text = "Forks : ${repository.forks}"
+                        ui.repositoryForksTextView.text = "Forks : ${repository.forksNumber}"
                         ui.repositoryPushedAtTextView.text = "Pushed at : ${repository.pushedAt}"
                         hideProgressBar()
                     }

@@ -21,10 +21,10 @@ class ItemViewHolder(
     fun bind(item: Repository) {
         this.item = item
         ui.itemRepositoryNameTextView.text = item.name
-        ui.itemRepositoryForksTextView.text = "Forks : ${item.forks.toString()}"
+        ui.itemRepositoryForksTextView.text = "Forks : ${item.forksNumber.toString()}"
         itemView.setOnClickListener { listener.onItemShortClickListener(item) }
         itemView.setOnLongClickListener { listener.onItemLongClickListener(item, ui.root) }
-        Log.d(TAG, "bind() called with: item = {${item.name} : ${item.forks.toString()}}")
+        Log.d(TAG, "bind() called with: item = {${item.name} : ${item.forksNumber.toString()}}")
     }
 
 }
