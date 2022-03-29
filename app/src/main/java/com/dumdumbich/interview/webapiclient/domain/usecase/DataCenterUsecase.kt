@@ -1,7 +1,7 @@
 package com.dumdumbich.interview.webapiclient.domain.usecase
 
 
-interface DataStorageUsecase :
+interface DataCenterUsecase :
     GetUserUsecase,
     GetRepositoryUsecase,
     PutUserUsecase,
