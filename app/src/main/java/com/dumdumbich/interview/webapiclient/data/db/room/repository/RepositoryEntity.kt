@@ -20,11 +20,11 @@ data class RepositoryEntity(
     @ColumnInfo(name = "repository_forks")
     val forks: Int,
 
-    @ColumnInfo(name = "id")
-    val id: Int,
+    @ColumnInfo(name = "repository_language")
+    val language: String,
 
-    @PrimaryKey
-    @ColumnInfo
-    val table_id: String
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "user_primary_key")
+    val primaryKey: Int
 
-)
+    )

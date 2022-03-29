@@ -17,11 +17,11 @@ data class UserEntity(
     @ColumnInfo(name = "user_repository_url")
     val reposUrl: String,
 
-    @ColumnInfo(name = "id")
-    val id: Int,
+    @ColumnInfo(name = "user_public_repos")
+    val publicRepos: Int,
 
-    @PrimaryKey
-    @ColumnInfo
-    val table_id: String
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "user_primary_key")
+    val primaryKey: Int
 
-)
+    )
