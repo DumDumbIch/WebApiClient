@@ -10,7 +10,7 @@ import com.dumdumbich.interview.webapiclient.data.net.githab.RepositoryDto
 import com.dumdumbich.interview.webapiclient.data.net.githab.UserDto
 import com.dumdumbich.interview.webapiclient.domain.entity.Repository
 import com.dumdumbich.interview.webapiclient.domain.entity.User
-import com.dumdumbich.interview.webapiclient.domain.usecase.GithubUsecase
+import com.dumdumbich.interview.webapiclient.domain.usecase.DataSourceUsecase
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -21,7 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 
-class GithubWebDataSource : GithubUsecase {
+class GithubWebDataSource : DataSourceUsecase {
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(Api.BASE_URL)
@@ -93,9 +93,9 @@ class GithubWebDataSource : GithubUsecase {
             })
     }
 
-    override fun getUserRepository(
-        userLogin: String,
+    override fun getRepository(
         repositoryName: String,
+        userLogin: String,
         onSuccess: (Repository) -> Unit,
         onError: (Throwable) -> Unit
     ) {
@@ -122,12 +122,12 @@ class GithubWebDataSource : GithubUsecase {
             })
     }
 
-    override fun getUserRepositories(
-        login: String,
+    override fun getRepositories(
+        userLogin: String,
         onSuccess: (List<Repository>) -> Unit,
         onError: (Throwable) -> Unit
     ) {
-        api.getUserRepositories(login)
+        api.getUserRepositories(userLogin)
             .enqueue(object : Callback<List<RepositoryDto>> {
                 override fun onResponse(
                     call: Call<List<RepositoryDto>>,
@@ -156,8 +156,7 @@ class GithubWebDataSource : GithubUsecase {
         return User(
             dto.avatarUrl,
             dto.login,
-            dto.reposUrl,
-            dto.id
+            dto.reposUrl
         )
     }
 
@@ -166,7 +165,7 @@ class GithubWebDataSource : GithubUsecase {
             dto.avatarUrl,
             dto.login,
             dto.reposUrl,
-            dto.id
+            dto.publicRepos
         )
     }
 
@@ -184,11 +183,12 @@ class GithubWebDataSource : GithubUsecase {
             dto.owner.login,
             dto.pushedAt,
             dto.forks,
-            dto.id
+            dto.language
         )
     }
 
     private fun getRepositoriesListFromDto(dtoList: List<RepositoryDto>): List<Repository> {
+        val repositories: MutableList<Repository> = emptyList<Repository>().toMutableList()
         for (dto in dtoList) {
             repositories.add(getRepositoryFromDto(dto))
         }
