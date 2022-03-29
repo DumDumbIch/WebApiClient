@@ -108,7 +108,7 @@ data class RepositoryDto(
     @SerializedName("issues_url") val issuesUrl: String,
     @SerializedName("keys_url") val keysUrl: String,
     @SerializedName("labels_url") val labelsUrl: String,
-    @SerializedName("language") val language: String,
+    @SerializedName("language") val language: String?,
     @SerializedName("languages_url") val languagesUrl: String,
     @SerializedName("license") val license: Any,
     @SerializedName("merges_url") val mergesUrl: String,

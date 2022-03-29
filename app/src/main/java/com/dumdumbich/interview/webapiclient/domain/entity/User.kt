@@ -5,5 +5,5 @@ data class User(
     val avatarUrl: String,
     val login: String,
     val reposUrl: String,
-    val id: Int
+    val publicRepositoriesNumber: Int = 0
 )
