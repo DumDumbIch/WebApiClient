@@ -107,6 +107,7 @@ class UserFragment : BaseFragment() {
                     uiHandler.post {
                         ui.userLoginTextView.text = user.login
                         ui.userRepositoryUrlTextView.text = user.reposUrl
+                        app.dataCenter.loadImage(user.avatarUrl, ui.userAvatarImageView)
                         hideUserProgressBar()
                     }
                 },
