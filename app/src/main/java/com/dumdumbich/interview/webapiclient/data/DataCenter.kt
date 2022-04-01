@@ -6,13 +6,11 @@ import android.widget.ImageView
 import com.dumdumbich.interview.webapiclient.data.source.GithubMockDataSource
 import com.dumdumbich.interview.webapiclient.data.source.GithubWebDataSource
 import com.dumdumbich.interview.webapiclient.data.source.GlideImageLoader
+import com.dumdumbich.interview.webapiclient.data.source.PicassoImageLoader
 import com.dumdumbich.interview.webapiclient.data.storage.CacheDataStorage
 import com.dumdumbich.interview.webapiclient.domain.entity.Repository
 import com.dumdumbich.interview.webapiclient.domain.entity.User
-import com.dumdumbich.interview.webapiclient.domain.usecase.DataCenterUsecase
-import com.dumdumbich.interview.webapiclient.domain.usecase.DataSourceUsecase
-import com.dumdumbich.interview.webapiclient.domain.usecase.DataStorageUsecase
-import com.dumdumbich.interview.webapiclient.domain.usecase.ImageLoaderUsecase
+import com.dumdumbich.interview.webapiclient.domain.usecase.*
 
 
 class DataCenter(context: Context) : DataCenterUsecase {
@@ -22,7 +20,8 @@ class DataCenter(context: Context) : DataCenterUsecase {
     private val githubDataSource: DataSourceUsecase by lazy { GithubWebDataSource() }
 //    private val githubDataSource: DataSourceUsecase by lazy { GithubMockDataSource() }
 
-    private val imageLoader: ImageLoaderUsecase<ImageView> by lazy { GlideImageLoader() }
+    //    private val imageLoader: ImageLoaderUsecase<ImageView> by lazy { GlideImageLoader() }
+    private val imageLoader: ImageLoaderUsecase<ImageView> by lazy { PicassoImageLoader() }
 
     private val dataStorage: DataStorageUsecase
 
