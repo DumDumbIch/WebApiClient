@@ -29,6 +29,18 @@ The main scenario:
 - by pressing the "back" button in the first screen, the application exits
 
 
+Work Log
+--------
+
+01/04/2022
+Uploading images: implementation with Picasso
+
+30/03/2022
+Uploading images: implementation with Glide
+
+29/03/2022
+Usecases redesign
+
 26/03/2022
 Implementation of working with data via Data Center
 Implemented work with cache (RAM) data storage
