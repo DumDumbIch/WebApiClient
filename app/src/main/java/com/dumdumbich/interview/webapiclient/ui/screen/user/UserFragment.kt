@@ -112,7 +112,7 @@ class UserFragment : BaseFragment() {
                     }
                 },
                 onError = {
-                    throw IllegalStateException("GitHub: user data receive error")
+                    throw IllegalStateException("DataCenter: user data receive error")
                 }
             )
         }
@@ -130,7 +130,7 @@ class UserFragment : BaseFragment() {
                     }
                 },
                 onError = {
-                    throw IllegalStateException("GitHub: user repositories data receive error")
+                    throw IllegalStateException("DataCenter: user repositories data receive error")
                 }
             )
         }

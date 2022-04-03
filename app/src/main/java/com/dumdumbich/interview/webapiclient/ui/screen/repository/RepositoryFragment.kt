@@ -89,7 +89,7 @@ class RepositoryFragment : BaseFragment() {
                     }
                 },
                 onError = {
-                    throw IllegalStateException("GitHub: user repository data receive error")
+                    throw IllegalStateException("DataCenter: user repository data receive error")
                 }
             )
         }

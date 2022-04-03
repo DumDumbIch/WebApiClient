@@ -15,16 +15,16 @@ data class RepositoryEntity(
     val ownerLogin: String,
 
     @ColumnInfo(name = "repository_pushed_at")
-    val pushedAt: String,
+    val pushedAt: String?,
 
     @ColumnInfo(name = "repository_forks")
     val forks: Int,
 
     @ColumnInfo(name = "repository_language")
-    val language: String,
+    val language: String?,
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "user_primary_key")
-    val primaryKey: Int
+    @ColumnInfo(name = "repository_primary_key")
+    val primaryKey: Int = 0
 
     )

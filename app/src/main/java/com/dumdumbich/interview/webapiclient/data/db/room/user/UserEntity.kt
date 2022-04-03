@@ -22,6 +22,6 @@ data class UserEntity(
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "user_primary_key")
-    val primaryKey: Int
+    val primaryKey: Int = 0
 
     )

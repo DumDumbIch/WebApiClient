@@ -24,7 +24,7 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(users: List<UserEntity>)
 
-    @Query("SELECT * FROM table_user WHERE user_login = :login")
+    @Query("SELECT * FROM table_user WHERE user_login LIKE :login")
     fun get(login: String): UserEntity
 
     @Query("SELECT * FROM table_user")

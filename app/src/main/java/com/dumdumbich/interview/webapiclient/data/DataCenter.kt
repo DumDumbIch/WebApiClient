@@ -8,6 +8,7 @@ import com.dumdumbich.interview.webapiclient.data.source.GithubWebDataSource
 import com.dumdumbich.interview.webapiclient.data.source.GlideImageLoader
 import com.dumdumbich.interview.webapiclient.data.source.PicassoImageLoader
 import com.dumdumbich.interview.webapiclient.data.storage.CacheDataStorage
+import com.dumdumbich.interview.webapiclient.data.storage.RoomDataStorage
 import com.dumdumbich.interview.webapiclient.domain.entity.Repository
 import com.dumdumbich.interview.webapiclient.domain.entity.User
 import com.dumdumbich.interview.webapiclient.domain.usecase.*
@@ -26,8 +27,8 @@ class DataCenter(context: Context) : DataCenterUsecase {
     private val dataStorage: DataStorageUsecase
 
     init {
-//        dataStorage = RoomDataStorage(context)
-        dataStorage = CacheDataStorage()
+        dataStorage = RoomDataStorage(context)
+//        dataStorage = CacheDataStorage()
     }
 
 

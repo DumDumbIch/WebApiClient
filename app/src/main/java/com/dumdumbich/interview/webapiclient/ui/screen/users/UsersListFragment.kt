@@ -77,7 +77,7 @@ class UsersListFragment : BaseFragment() {
                     }
                 },
                 onError = {
-                    throw IllegalStateException("GitHub: users data receive error")
+                    throw IllegalStateException("DataCenter: users data receive error")
                 }
             )
         }

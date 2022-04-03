@@ -24,10 +24,10 @@ interface RepositoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(repositories: List<RepositoryEntity>)
 
-    @Query("SELECT * FROM table_repository WHERE repository_name = :name AND repository_owner_login = :ownerLogin")
+    @Query("SELECT * FROM table_repository WHERE repository_name LIKE :name AND repository_owner_login LIKE :ownerLogin")
     fun get(name: String, ownerLogin: String): RepositoryEntity
 
-    @Query("SELECT * FROM table_repository WHERE repository_owner_login = :ownerLogin")
+    @Query("SELECT * FROM table_repository WHERE repository_owner_login LIKE :ownerLogin")
     fun get(ownerLogin: String): List<RepositoryEntity>
 
     @Query("SELECT * FROM table_repository")
