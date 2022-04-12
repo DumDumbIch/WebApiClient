@@ -7,11 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 
 
-open class BaseFragment : Fragment() {
+open class BaseFragment<VB : ViewBinding>(private val bindingInflater: (inflater: LayoutInflater) -> VB) :
+    Fragment() {
 
     private val TAG = "@@@  ${this::class.java.simpleName} : ${this.hashCode()}"
+
+    private var _ui: VB? = null
+    protected val ui get() = _ui!!
 
 
     override fun onAttach(context: Context) {
@@ -33,7 +38,11 @@ open class BaseFragment : Fragment() {
             TAG,
             "onCreateView() called with: inflater = $inflater, container = $container, savedInstanceState = $savedInstanceState"
         )
-        return super.onCreateView(inflater, container, savedInstanceState)
+        _ui = bindingInflater.invoke(layoutInflater)
+        if (_ui == null) {
+            throw IllegalAccessException("$TAG: view binding cannot be null")
+        }
+        return ui.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,6 +75,7 @@ open class BaseFragment : Fragment() {
 
     override fun onDestroyView() {
         Log.d(TAG, "onDestroyView() called")
+        _ui = null
         super.onDestroyView()
     }
 

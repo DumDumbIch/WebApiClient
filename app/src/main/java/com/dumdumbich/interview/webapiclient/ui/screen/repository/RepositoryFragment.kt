@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.Looper
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import com.dumdumbich.interview.webapiclient.app
@@ -19,7 +17,8 @@ private const val ARG_USER_LOGIN = "arg_user_login"
 private const val ARG_REPOSITORY_NAME = "arg_repository_name"
 
 
-class RepositoryFragment : BaseFragment() {
+class RepositoryFragment :
+    BaseFragment<FragmentRepositoryBinding>(FragmentRepositoryBinding::inflate) {
 
     companion object {
 
@@ -32,9 +31,6 @@ class RepositoryFragment : BaseFragment() {
             }
 
     }
-
-    private var _ui: FragmentRepositoryBinding? = null
-    private val ui get() = _ui!!
 
     private val handlerThread: HandlerThread = HandlerThread("thread_pool")
     private val uiHandler by lazy { Handler(Looper.getMainLooper()) }
@@ -62,16 +58,9 @@ class RepositoryFragment : BaseFragment() {
 
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View = FragmentRepositoryBinding.inflate(inflater, container, false).root
-
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _ui = FragmentRepositoryBinding.bind(view)
         handlerThread.start()
 
         showProgressBar()
@@ -94,11 +83,6 @@ class RepositoryFragment : BaseFragment() {
             )
         }
 
-    }
-
-    override fun onDestroyView() {
-        _ui = null
-        super.onDestroyView()
     }
 
     override fun onDestroy() {

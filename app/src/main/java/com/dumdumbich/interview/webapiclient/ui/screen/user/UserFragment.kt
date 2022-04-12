@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.Looper
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.core.view.isVisible
@@ -20,7 +18,7 @@ import com.dumdumbich.interview.webapiclient.ui.base.BaseFragment
 private const val ARG_USER_LOGIN = "arg_user_login"
 
 
-class UserFragment : BaseFragment() {
+class UserFragment : BaseFragment<FragmentUserBinding>(FragmentUserBinding::inflate) {
 
     companion object {
 
@@ -33,9 +31,6 @@ class UserFragment : BaseFragment() {
 
     }
 
-
-    private var _ui: FragmentUserBinding? = null
-    private val ui get() = _ui!!
 
     private val handlerThread: HandlerThread = HandlerThread("thread_pool")
     private val uiHandler by lazy { Handler(Looper.getMainLooper()) }
@@ -84,15 +79,8 @@ class UserFragment : BaseFragment() {
 
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View = FragmentUserBinding.inflate(inflater, container, false).root
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _ui = FragmentUserBinding.bind(view)
         handlerThread.start()
 
         itemsListAdapter = ItemsListAdapter(repositories, listener)
@@ -135,11 +123,6 @@ class UserFragment : BaseFragment() {
             )
         }
 
-    }
-
-    override fun onDestroyView() {
-        _ui = null
-        super.onDestroyView()
     }
 
     override fun onDestroy() {

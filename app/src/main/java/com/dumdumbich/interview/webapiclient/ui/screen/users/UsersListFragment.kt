@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.Looper
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import com.dumdumbich.interview.webapiclient.app
@@ -15,10 +13,8 @@ import com.dumdumbich.interview.webapiclient.domain.entity.User
 import com.dumdumbich.interview.webapiclient.ui.base.BaseFragment
 
 
-class UsersListFragment : BaseFragment() {
-
-    private var _ui: FragmentUsersListBinding? = null
-    private val ui get() = _ui!!
+class UsersListFragment :
+    BaseFragment<FragmentUsersListBinding>(FragmentUsersListBinding::inflate) {
 
     private val handlerThread: HandlerThread = HandlerThread("thread_pool")
     private val uiHandler by lazy { Handler(Looper.getMainLooper()) }
@@ -49,15 +45,8 @@ class UsersListFragment : BaseFragment() {
     }
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View = FragmentUsersListBinding.inflate(inflater, container, false).root
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _ui = FragmentUsersListBinding.bind(view)
         handlerThread.start()
 
         itemsListAdapter = ItemsListAdapter(
@@ -82,11 +71,6 @@ class UsersListFragment : BaseFragment() {
             )
         }
 
-    }
-
-    override fun onDestroyView() {
-        _ui = null
-        super.onDestroyView()
     }
 
     override fun onDestroy() {
